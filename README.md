@@ -4,7 +4,7 @@ A beginner-friendly ML project to predict house prices using Linear Regression.
 
 ## Description
 
-This project uses the California Housing dataset to train a Linear Regression model, predicting house values based on features like median income and house age. The code is modular, with separate files for data loading, model training, and visualization.
+This project uses the California Housing dataset to train a Linear Regression model, predicting house values based on features like median income and house age. It includes functionality to predict prices for new houses using a saved model. The code is modular, with separate files for data loading, model training, visualization, and prediction.
 
 ## Requirements
 
@@ -19,6 +19,11 @@ This project uses the California Housing dataset to train a Linear Regression mo
 4. Install dependencies: `uv pip install -r requirements.txt`
 5. Run: `python main.py`
 
+## Usage
+
+- Train and evaluate the model: `python main.py`
+- Predict for a new house: Modify `main.py` with new `MedInc` and `HouseAge` values or call `predict_new_house(med_inc, house_age)` in a script.
+
 ## Outputs
 
 - `house_price_model.pkl`: Trained model.
@@ -28,8 +33,10 @@ This project uses the California Housing dataset to train a Linear Regression mo
 
 California Housing dataset (built into scikit-learn).
 
-## Learning Outcomes
+## Example Prediction
 
-- Understand Linear Regression and model training.
-- Practice modular Python coding.
-- Visualize ML results with Matplotlib.
+```python
+from predict.predict import predict_new_house
+price = predict_new_house(med_inc=8.0, house_age=20.0)
+print(f'Predicted price: ${price*100000:.2f}')
+```

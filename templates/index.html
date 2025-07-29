@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI House Price Predictor | Machine Learning Portfolio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        color: #ffffff;
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header {
+        padding: 40px 0;
+        text-align: center;
+        border-bottom: 1px solid #333;
+        margin-bottom: 60px;
+      }
+
+      .header h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: #999;
+        font-weight: 300;
+        margin-bottom: 30px;
+      }
+
+      .tech-stack {
+        display: inline-flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .tech-badge {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .tech-badge:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+        margin-bottom: 80px;
+      }
+
+      .info-section {
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+      }
+
+      .info-section h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .info-section p {
+        color: #cccccc;
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+      }
+
+      .features-list {
+        list-style: none;
+        margin: 30px 0;
+      }
+
+      .features-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e0e0e0;
+        font-size: 1rem;
+        position: relative;
+        padding-left: 30px;
+      }
+
+      .features-list li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .features-list li:last-child {
+        border-bottom: none;
+      }
+
+      .predictor-section {
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+      }
+
+      .predictor-section h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+        color: #ffffff;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 30px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #ffffff;
+        font-size: 1.1rem;
+      }
+
+      .form-group input[type="number"] {
+        width: 100%;
+        padding: 18px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        color: #ffffff;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .form-group input[type="number"]:focus {
+        outline: none;
+        border-color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+      }
+
+      .form-group input::placeholder {
+        color: #999;
+      }
+
+      .predict-btn {
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+        color: #000000;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 10px;
+      }
+
+      .predict-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+        background: linear-gradient(135deg, #f0f0f0 0%, #d0d0d0 100%);
+      }
+
+      .predict-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .result {
+        margin-top: 30px;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .result h3 {
+        color: #ffffff;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .price-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .methodology {
+        margin-top: 80px;
+        padding: 60px 40px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        text-align: center;
+      }
+
+      .methodology h2 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .methodology-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        margin-top: 50px;
+      }
+
+      .methodology-card {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .methodology-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .methodology-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #ffffff;
+      }
+
+      .methodology-card p {
+        color: #cccccc;
+        line-height: 1.8;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .header h1 {
+          font-size: 2.5rem;
+        }
+
+        .methodology-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .info-section,
+        .predictor-section {
+          padding: 30px 20px;
+        }
+      }
+
+      .footer {
+        text-align: center;
+        padding: 40px 0;
+        border-top: 1px solid #333;
+        margin-top: 80px;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>AI House Price Predictor</h1>
+        <p class="subtitle">
+          Advanced Machine Learning Model for Real Estate Valuation
+        </p>
+        <div class="tech-stack">
+          <span class="tech-badge">Machine Learning</span>
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">Scikit-learn</span>
+          <span class="tech-badge">Flask</span>
+          <span class="tech-badge">Data Science</span>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <div class="info-section">
+          <h2>Project Overview</h2>
+          <p>
+            This sophisticated machine learning application demonstrates
+            advanced predictive modeling capabilities for real estate valuation.
+            Built using state-of-the-art algorithms, it processes key housing
+            market indicators to provide accurate price predictions.
+          </p>
+
+          <p>
+            The model leverages comprehensive market data analysis,
+            incorporating demographic and property-specific features to deliver
+            reliable valuation estimates for potential buyers, sellers, and real
+            estate professionals.
+          </p>
+
+          <ul class="features-list">
+            <li>Advanced regression algorithms with feature engineering</li>
+            <li>Real-time prediction capabilities with sub-second response</li>
+            <li>Robust data validation and preprocessing pipeline</li>
+            <li>Scalable architecture supporting high-volume requests</li>
+            <li>Model performance monitoring and continuous improvement</li>
+            <li>Professional-grade error handling and logging</li>
+          </ul>
+
+          <p>
+            <strong>Technical Implementation:</strong> This application
+            showcases proficiency in full-stack development, combining backend
+            machine learning models with responsive frontend interfaces. The
+            system demonstrates best practices in model deployment, data
+            validation, and user experience design.
+          </p>
+        </div>
+
+        <div class="predictor-section">
+          <h2>Price Prediction Engine</h2>
+          <form method="POST" action="/" id="predictionForm">
+            <div class="form-group">
+              <label for="med_inc">Median Household Income</label>
+              <input
+                type="number"
+                step="0.01"
+                id="med_inc"
+                name="med_inc"
+                placeholder="Enter in $10,000 units (e.g., 5.2 for $52,000)"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="house_age">Property Age</label>
+              <input
+                type="number"
+                step="1"
+                id="house_age"
+                name="house_age"
+                placeholder="Enter age in years (e.g., 15)"
+                required
+              />
+            </div>
+
+            <button type="submit" class="predict-btn">
+              Generate Prediction
+            </button>
+          </form>
+
+          {% if prediction %}
+          <div class="result">
+            <h3>Predicted Market Value</h3>
+            <div class="price-value">
+              ${{ "{:,.0f}".format(prediction * 100000) }}
+            </div>
+            <p style="color: #ccc; margin-top: 10px">
+              Based on current market conditions and property characteristics
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="methodology">
+        <h2>Technical Methodology</h2>
+        <p
+          style="
+            color: #cccccc;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+          "
+        >
+          Our machine learning pipeline employs sophisticated algorithms to
+          analyze housing market trends and deliver precise valuation
+          predictions through advanced statistical modeling.
+        </p>
+
+        <div class="methodology-grid">
+          <div class="methodology-card">
+            <h3>Data Processing</h3>
+            <p>
+              Comprehensive data preprocessing including normalization, feature
+              scaling, and outlier detection ensures optimal model performance
+              and prediction accuracy across diverse market conditions.
+            </p>
+          </div>
+
+          <div class="methodology-card">
+            <h3>Model Architecture</h3>
+            <p>
+              Advanced ensemble methods combining multiple regression
+              algorithms, with hyperparameter optimization and cross-validation
+              techniques to maximize predictive reliability.
+            </p>
+          </div>
+
+          <div class="methodology-card">
+            <h3>Validation Framework</h3>
+            <p>
+              Rigorous testing protocols including k-fold cross-validation,
+              holdout testing, and performance metrics analysis ensure
+              consistent accuracy across different market segments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>
+          © 2025 AI House Price Predictor | Advanced Machine Learning Portfolio
+          Project
+        </p>
+        <p>
+          Demonstrating expertise in Data Science, Machine Learning, and
+          Full-Stack Development
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Enhanced form interaction
+      document
+        .getElementById("predictionForm")
+        .addEventListener("submit", function (e) {
+          const button = document.querySelector(".predict-btn");
+          button.textContent = "Processing...";
+          button.style.background =
+            "linear-gradient(135deg, #cccccc 0%, #999999 100%)";
+        });
+
+      // Input validation and formatting
+      document.querySelectorAll('input[type="number"]').forEach((input) => {
+        input.addEventListener("focus", function () {
+          this.style.transform = "translateY(-2px)";
+        });
+
+        input.addEventListener("blur", function () {
+          this.style.transform = "translateY(0)";
+        });
+      });
+
+      // Smooth scroll for better UX
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

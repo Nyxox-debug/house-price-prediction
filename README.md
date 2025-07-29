@@ -1,10 +1,10 @@
 # House Price Prediction
 
-A beginner-friendly ML project to predict house prices using Linear Regression.
+A beginner-friendly ML project to predict house prices using Linear Regression, with a Flask web app for online predictions.
 
 ## Description
 
-This project uses the California Housing dataset to train a Linear Regression model, predicting house values based on features like median income and house age. It includes functionality to predict prices for new houses using a saved model. The code is modular, with separate files for data loading, model training, visualization, and prediction.
+This project uses the California Housing dataset to train a Linear Regression model, predicting house values based on features like median income and house age. It includes a web interface (Flask) for users to input values and get predictions. The code is modular, with separate files for data loading, model training, visualization, and prediction.
 
 ## Requirements
 
@@ -17,12 +17,20 @@ This project uses the California Housing dataset to train a Linear Regression mo
 2. Create a virtual environment: `uv venv`
 3. Activate: `source .venv/bin/activate` (Mac/Linux) or `.venv\Scripts\activate` (Windows)
 4. Install dependencies: `uv pip install -r requirements.txt`
-5. Run: `python main.py`
+5. Train the model: `python main.py` (generates `house_price_model.pkl`)
 
 ## Usage
 
-- Train and evaluate the model: `python main.py`
-- Predict for a new house: Modify `main.py` with new `MedInc` and `HouseAge` values or call `predict_new_house(med_inc, house_age)` in a script.
+### Local Web App
+
+1. Run the Flask app: `python app.py`
+2. Open a browser and go to `http://127.0.0.1:5000`
+3. Enter `Median Income` (in $10,000s) and `House Age` (years) to get a predicted price.
+
+### Online Deployment (Optional)
+
+1. Deploy to a platform like Render or Heroku (see below).
+2. Access the app via the provided URL.
 
 ## Outputs
 

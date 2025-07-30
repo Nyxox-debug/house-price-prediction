@@ -27,11 +27,6 @@ This project uses the California Housing dataset to train a Linear Regression mo
 2. Open a browser and go to `http://127.0.0.1:5000`
 3. Enter `Median Income` (in $10,000s) and `House Age` (years) to get a predicted price.
 
-### Online Deployment (Optional)
-
-1. Deploy to a platform like Render or Heroku (see below).
-2. Access the app via the provided URL.
-
 ## Outputs
 
 - `house_price_model.pkl`: Trained model.

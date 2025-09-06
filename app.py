@@ -3,6 +3,7 @@ from predict.predict import predict_new_house
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     prediction = None
